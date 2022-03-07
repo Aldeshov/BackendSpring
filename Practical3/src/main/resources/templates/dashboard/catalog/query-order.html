@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Purchase order details</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">Purchase order details</div>
+        <div class="panel-body">
+            <br/>
+            <table class="table table-borderless" th:object="${po}">
+                <tr class="table-row">
+                    <td>Plant name</td>
+                    <td style="font-weight: bold" th:text="*{plant.name}"></td>
+                </tr>
+                <tr class="table-row">
+                    <td>Plant description</td>
+                    <td style="font-weight: bold" th:text="*{plant.description}"></td>
+                </tr>
+                <tr class="table-row">
+                    <td>Start date</td>
+                    <td style="font-weight: bold" th:text="*{rentalPeriod.startDate}"></td>
+                </tr>
+                <tr class="table-row">
+                    <td>End date</td>
+                    <td style="font-weight: bold" th:text="*{rentalPeriod.endDate}"></td>
+                </tr>
+                <tr class="table-row">
+                    <td>Cost</td>
+                    <td id="price-total" style="font-weight: bold" th:text="*{total}"></td>
+                </tr>
+                <tr class="table-row">
+                    <td>Status</td>
+                    <td style="font-weight: bold" th:text="*{status}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>

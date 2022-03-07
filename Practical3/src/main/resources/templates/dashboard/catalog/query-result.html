@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>List all Plants</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">List of Plants</div>
+        <div class="panel-body">
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="table-row" th:each="plant : ${plants}">
+                    <td th:text="${plant.name}"></td>
+                    <td th:text="${plant.description}"></td>
+                    <td th:text="${plant.price}"></td>
+                    <td>
+                        <form style="float:left; padding:5px; height:0" th:object="${po}" th:method="post"
+                              th:action="@{'/dashboard/orders'}">
+                            <input type="hidden" name="plant.id" th:value="${plant.id}">
+                            <input type="hidden" name="plant.name" th:value="${plant.name}">
+                            <input type="hidden" name="plant.description" th:value="${plant.description}">
+                            <input type="hidden" id="total" name="plant.price" th:value="${plant.price}">
+                            <input type="hidden" th:field="*{rentalPeriod.startDate}">
+                            <input type="hidden" th:field="*{rentalPeriod.endDate}">
+                            <button class="btn btn-default btn-xs" type="submit">Create PO</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
