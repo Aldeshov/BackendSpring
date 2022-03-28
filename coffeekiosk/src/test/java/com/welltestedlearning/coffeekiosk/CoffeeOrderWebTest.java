@@ -1,6 +1,9 @@
 package com.welltestedlearning.coffeekiosk;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.welltestedlearning.coffeekiosk.adapter.in.api.CoffeeOrderController;
+import com.welltestedlearning.coffeekiosk.domain.CoffeeItem;
+import com.welltestedlearning.coffeekiosk.domain.CoffeeItemResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -43,5 +46,23 @@ public class CoffeeOrderWebTest {
 
         assertThat(mvcResult.getResponse().getContentAsString())
                 .isEqualTo(expectedJson);
+    }
+
+    @Test
+    public void getCoffeeOrderAsXmlIsOk() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/api/coffee/order")
+                        .accept(MediaType.APPLICATION_XML))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String xmlContent = mvcResult.getResponse().getContentAsString();
+        assertThat(xmlContent)
+                .contains("<CoffeeItemResponse>",
+                        "<id/>",
+                        "<kind>latte</kind>",
+                        "<creamer>milk</creamer>",
+                        "<size>small</size>",
+                        "<price>1</price>",
+                        "</CoffeeItemResponse>");
     }
 }

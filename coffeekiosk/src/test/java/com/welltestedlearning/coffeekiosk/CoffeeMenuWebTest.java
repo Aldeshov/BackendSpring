@@ -1,5 +1,6 @@
 package com.welltestedlearning.coffeekiosk;
 
+import com.welltestedlearning.coffeekiosk.adapter.in.api.CoffeeMenuController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
