@@ -76,5 +76,16 @@ public class MealOrder {
         System.out.println("Price: " + price() + "$");
         System.out.println("------------------------------------------------");
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (MenuItem menuItem : items) {
+            stringBuilder.append(menuItem);
+            if (items.size() > 1)
+                stringBuilder.append(", ");
+        }
+        return stringBuilder.toString();
+    }
 }
 

@@ -2,9 +2,15 @@ package com.welltestedlearning.mealkiosk;
 
 public class Burger implements MenuItem {
 
-    private final Toppings toppings = new Toppings();
+    private Toppings toppings = new Toppings();
 
-    public Burger() { }
+    public Burger() {
+    }
+
+    public Burger(Toppings toppings) {
+        this.toppings = toppings;
+    }
+
     public Burger(BurgerTopping theBurgerOption) {
         toppings.add(theBurgerOption);
     }
