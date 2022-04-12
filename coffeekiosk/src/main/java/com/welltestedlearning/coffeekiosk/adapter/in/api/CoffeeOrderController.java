@@ -4,13 +4,17 @@ import com.welltestedlearning.coffeekiosk.domain.CoffeeItem;
 import com.welltestedlearning.coffeekiosk.domain.CoffeeItemResponse;
 import com.welltestedlearning.coffeekiosk.domain.CoffeeOrder;
 import com.welltestedlearning.coffeekiosk.domain.CoffeeOrderRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.time.LocalDateTime;
 
 @RestController
 public class CoffeeOrderController {
+    @Value("${order.price.currency.prefix}")
+    private String currencyPrefix;
     private final CoffeeOrderRepository coffeeOrderRepository;
 
     public CoffeeOrderController(CoffeeOrderRepository coffeeOrderRepository) {
@@ -27,9 +31,20 @@ public class CoffeeOrderController {
         if (orderId < 0) throw new IllegalArgumentException("Invalid Order ID");
         if (coffeeOrderRepository.findById(orderId).isPresent()) {
             CoffeeOrder coffeeOrder = coffeeOrderRepository.findById(orderId).get();
-            CoffeeOrderResponse response = CoffeeOrderResponse.from(coffeeOrder);
+            CoffeeOrderResponse response = CoffeeOrderResponse.from(coffeeOrder, currencyPrefix);
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/api/coffee/orders")
+    public ResponseEntity createCoffeeOrder(@RequestBody CoffeeOrderRequest coffeeOrderRequest) {
+        CoffeeOrder coffeeOrder = new CoffeeOrder(coffeeOrderRequest.getCustomerName(), LocalDateTime.now());
+        CoffeeItem coffeeItem = new CoffeeItem(coffeeOrderRequest.getSize(), coffeeOrderRequest.getKind(), coffeeOrderRequest.getCreamer());
+        coffeeOrder.add(coffeeItem);
+        CoffeeOrder savedCoffeeOrder = coffeeOrderRepository.save(coffeeOrder);
+        return ResponseEntity.created(
+                URI.create("/api/coffee/orders/" + savedCoffeeOrder.getId())
+        ).build();
     }
 }

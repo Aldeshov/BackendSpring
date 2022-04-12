@@ -62,7 +62,7 @@ class CoffeeOrderWebTest {
                 .andReturn();
 
         CoffeeOrder coffeeOrder = createCoffeeOrderWithOneItemAndIdOf(23L);
-        CoffeeOrderResponse expectedResponse = CoffeeOrderResponse.from(coffeeOrder);
+        CoffeeOrderResponse expectedResponse = CoffeeOrderResponse.from(coffeeOrder, "currencyPrefix");
         String expectedJson = objectMapper.writeValueAsString(expectedResponse);
 
         assertThat(mvcResult.getResponse().getContentAsString())

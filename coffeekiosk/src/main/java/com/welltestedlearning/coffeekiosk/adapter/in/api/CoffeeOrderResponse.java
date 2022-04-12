@@ -14,12 +14,12 @@ public class CoffeeOrderResponse {
   private List<CoffeeItemResponse> coffeeItems;
   private String totalPrice;
 
-  public static CoffeeOrderResponse from(CoffeeOrder coffeeOrder) {
+  public static CoffeeOrderResponse from(CoffeeOrder coffeeOrder, String pricePrefix) {
     CoffeeOrderResponse coffeeOrderResponse = new CoffeeOrderResponse();
     coffeeOrderResponse.setId(coffeeOrder.getId());
     coffeeOrderResponse.setCustomerName(coffeeOrder.customerName());
     coffeeOrderResponse.setOrderDateTime(coffeeOrder.orderDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-    coffeeOrderResponse.setTotalPrice("$" + coffeeOrder.totalPrice());
+    coffeeOrderResponse.setTotalPrice("$" + pricePrefix);
 
     List<CoffeeItemResponse> coffeeItemResponses = coffeeOrder.coffeeItems()
                                                               .stream()
