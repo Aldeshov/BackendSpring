@@ -25,13 +25,14 @@ public class CoffeeItem {
     }
 
     public int price() {
+        int multiplier = 100;
         switch (size) {
             case "small":
-                return 1;
+                return multiplier;
             case "medium":
-                return 2;
+                return 2 * multiplier;
             case "large":
-                return 3;
+                return 3 * multiplier;
             default:
                 return 0;
         }
